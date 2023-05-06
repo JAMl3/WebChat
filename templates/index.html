@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebChat</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+        }
+        .container {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        #messages {
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        input.form-control {
+            background-color: #555;
+            color: #fff;
+            border: none;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0062cc;
+            border-color: #005cbf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="text-center mb-4">WebChat</h1>
+                <div id="messages" class="mb-3"></div>
+                <div class="input-group">
+                    <input type="text" id="username" class="form-control mr-2" placeholder="Enter your username">
+                    <input type="text" id="message" class="form-control" placeholder="Enter your message">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="sendBtn" type="button">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Socket.io -->
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Connect to SocketIO server
+            var socket = io.connect("http://localhost:5000");
+
+            // Send a message to the server when a user connects
+            socket.on('connect', function() {
+                socket.send("User connected!");
+            });
+
+            // Receive messages from the server
+            socket.on('message', function(data) {
+                $('#messages').append($('<div>').text(data));
+            });
+
+            // Send a message to the server when the send button is clicked
+            $('#sendBtn').on('click', function() {
+                var username = $('#username').val();
+                var message = $('#message').val();
+                if (username === '') {
+                    alert('Please enter your username!');
+                    return;
+                }
+                if (message === '') {
+                    alert('Please enter your message!');
+                    return;
+                }
+                socket.send(username + ': ' + message);
+                $('#message').val('');
+            });
+
+            // Submit the form when the enter key is pressed in the message input field
+            $('#message').keypress(function(event) {
+                if (event.which === 13) {
+                    event.preventDefault();
+                    $('#sendBtn').click();
+                }
+            });
+        })
+    </script>
+</body>
+</html>
