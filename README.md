@@ -12,11 +12,15 @@ To run this application locally, you must have Python 3.x installed on your syst
 #bash
 
 git clone https://github.com/your-username/webchat.git
+
 cd webchat
+
 pip install -r requirements.txt
+
 To start the application, run the following command:
 
 python app.py
+
 The application will be accessible at http://localhost:5000.
 
 Usage
