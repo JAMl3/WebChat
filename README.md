@@ -1,6 +1,12 @@
 WebChat
 WebChat is a simple chat application built using Flask and Socket.IO. It allows users to communicate with each other in real-time using a web browser. This project is useful for learning the basics of Flask and Socket.IO, and can be extended to add more features and functionality.
 
+![image](https://user-images.githubusercontent.com/97791913/236890284-e48d2191-9eea-4524-bd32-1497c3502350.png)
+
+![image](https://user-images.githubusercontent.com/97791913/236890426-c0c4476b-c084-4b33-b033-2c84755a2920.png)
+
+
+
 Features
 Real-time chat using Socket.IO
 Supports multiple users
